@@ -30,7 +30,7 @@ const Blog = ({ blog, likeHandler, deleteBlog, username }) => {
   if (fullView) {
     return (
       <li className="list-group-item">
-        <div onClick={toggleFullView} style={{ cursor: "pointer" }}>
+        <div onClick={toggleFullView} style={{ cursor: 'pointer' }}>
           <h4>{blog.title} by {blog.author}</h4>
         </div>
         <a href={blog.url}>{blog.url}</a>
@@ -43,7 +43,7 @@ const Blog = ({ blog, likeHandler, deleteBlog, username }) => {
     )
   } else {
     return (
-      <li className="list-group-item" onClick={toggleFullView} style={{ cursor: "pointer" }}>
+      <li className="list-group-item" onClick={toggleFullView} style={{ cursor: 'pointer' }}>
         <h4>{blog.title} by {blog.author}</h4>
       </li>
     )

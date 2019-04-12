@@ -131,10 +131,10 @@ const App = () => {
         author: author,
         url: url
       }
-      
+
       const newBlog = await blogService.postNew(blogTemp)
       setBlogs(blogs.concat(newBlog))
-      
+
       setTitle('')
       setAuthor('')
       setUrl('')
@@ -145,7 +145,7 @@ const App = () => {
       setTimeout(() => {
         setNotificationMsg(null)
       }, 5000)
-      
+
     } catch (exception) {
       console.log(exception)
       setTitle('')
@@ -183,27 +183,27 @@ const App = () => {
   const deleteBlog = async (id) => {
     let confirm = window.confirm('Are you sure you want to delete this blog?')
     if (confirm) {
-        try {
-          await blogService.remove(id)
-          const updatedBlogs = await blogService.getAll()
-          await updatedBlogs.sort((a, b) => { return b.likes - a.likes })
-          setBlogs(updatedBlogs)
-    
-          setNotificationMsg("Deleted succesfully")
+      try {
+        await blogService.remove(id)
+        const updatedBlogs = await blogService.getAll()
+        await updatedBlogs.sort((a, b) => { return b.likes - a.likes })
+        setBlogs(updatedBlogs)
+
+        setNotificationMsg('Deleted succesfully')
+        setIsError(false)
+
+        setTimeout(() => {
+          setNotificationMsg(null)
+        }, 5000)
+      } catch (exception) {
+        setNotificationMsg('Something went wrong deleting the blog :(')
+        setIsError(true)
+
+        setTimeout(() => {
+          setNotificationMsg(null)
           setIsError(false)
-    
-          setTimeout(() => {
-            setNotificationMsg(null)
-          }, 5000)
-        } catch (exception) {
-          setNotificationMsg('Something went wrong deleting the blog :(')
-          setIsError(true)
-    
-          setTimeout(() => {
-            setNotificationMsg(null)
-            setIsError(false)
-          }, 5000)
-        }
+        }, 5000)
+      }
     }
   }
 
