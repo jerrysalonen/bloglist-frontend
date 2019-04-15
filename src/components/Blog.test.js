@@ -14,6 +14,7 @@ describe('content is rendered before click', () => {
     }
   }
 
+
   it('title', () => {
     const component = render (
       <Blog blog = {blog} />
