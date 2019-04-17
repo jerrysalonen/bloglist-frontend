@@ -7,11 +7,14 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import ShowOrHide from './components/ShowOrHide'
 import 'bootstrap/dist/css/bootstrap.css'
+import { useField } from './hooks'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  //const [username, setUsername] = useState('')
+  //const [password, setPassword] = useState('')
+  const usernameInput = useField('text')
+  const passwordInput = useField('password')
   const [user, setUser] = useState(null)
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
@@ -37,13 +40,18 @@ const App = () => {
   }, [])
 
   const loginForm = () => {
+    const { ['reset']: resetUName, ...usernameWithoutReset } = usernameInput
+    const { ['reset']: resetPWord, ...passwordWithoutReset } = passwordInput
+
     return (
       <Login
         handleLogin={handleLogin}
-        username={username}
-        setUsername={setUsername}
-        password={password}
-        setPassword={setPassword}
+        usernameInput={usernameWithoutReset}
+        passwordInput={passwordWithoutReset}
+        //username={username}
+        //setUsername={setUsername}
+        //password={password}
+        //setPassword={setPassword}
       />
     )
   }
@@ -87,7 +95,7 @@ const App = () => {
     event.preventDefault()
     try {
       const userTemp = await loginService.login({
-        username, password
+        username: usernameInput.value, password: passwordInput.value
       })
 
       window.localStorage.setItem(
@@ -96,8 +104,9 @@ const App = () => {
 
       setUser(userTemp)
       blogService.setToken(userTemp.token)
-      setUsername('')
-      setPassword('')
+
+      usernameInput.reset()
+      passwordInput.reset()
 
       setNotificationMsg(`Successfully logged in as ${userTemp.name}`)
       setIsError(false)
@@ -107,10 +116,8 @@ const App = () => {
       }, 5000)
 
     } catch (exception) {
-      setUsername('')
-      setPassword('')
-
-      console.log(exception)
+      usernameInput.reset()
+      passwordInput.reset()
 
       setNotificationMsg('Wrong username or password')
       setIsError(true)

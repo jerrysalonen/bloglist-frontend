@@ -8,21 +8,17 @@ const Login = (props) => {
       <div className="form-group">
         <label htmlFor="username-input">Username:</label>
         <input
-          type="text"
+          {...props.usernameInput}
           id="username-input"
-          className="form-control"
-          value={props.username}
-          onChange={({ target }) => props.setUsername(target.value)}>
+          className="form-control">
         </input>
       </div>
       <div className="form-group">
         <label htmlFor="password-input">Password:</label>
         <input
-          type="password"
+          {...props.passwordInput}
           id="password-input"
-          className="form-control"
-          value={props.password}
-          onChange={({ target }) => props.setPassword(target.value)}>
+          className="form-control">
         </input>
       </div>
       <button className="btn btn-primary" type="submit">Login</button>
@@ -32,10 +28,8 @@ const Login = (props) => {
 
 Login.propTypes = {
   handleLogin: PropTypes.func.isRequired,
-  setUsername: PropTypes.func.isRequired,
-  setPassword: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired
+  usernameInput: PropTypes.object.isRequired,
+  passwordInput: PropTypes.object.isRequired
 }
 
 export default Login
